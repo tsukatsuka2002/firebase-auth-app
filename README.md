@@ -149,7 +149,3 @@ npm run build
 - HTTPS の使用（本番環境）
 - 適切なCORS設定
 
----
-
-**開発者**: GitHub Copilot & ユーザー  
-**最終更新**: 2025年8月31日
