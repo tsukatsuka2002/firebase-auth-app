@@ -121,6 +121,13 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
    * Firebase の認証状態変化を監視するリスナーを設定
    */
   useEffect(() => {
+    // Firebase authが正しく初期化されているかチェック
+    if (!auth) {
+      console.warn("Firebase認証が初期化されていません。デモモードで動作します。");
+      setLoading(false);
+      return;
+    }
+
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setCurrentUser(user); // ユーザー状態を更新
       setLoading(false);    // 読み込み完了
