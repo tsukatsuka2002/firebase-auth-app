@@ -2,6 +2,8 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
+import type { Auth } from 'firebase/auth';
+import type { Firestore } from 'firebase/firestore';
 
 /**
  * Firebase プロジェクトの設定オブジェクト
@@ -35,32 +37,29 @@ if (firebaseConfig.apiKey === "demo-api-key") {
 }
 
 // Firebaseアプリを初期化
-// この初期化により、他のFirebaseサービスを使用できるようになります
 let app;
-let authInstance;
-let dbInstance;
+let authInstance: Auth;
+let dbInstance: Firestore;
 
 try {
   app = initializeApp(firebaseConfig);
-  
-  /**
-   * Firebase Authentication インスタンス
-   * ユーザーのサインアップ、ログイン、ログアウト等の認証機能を提供
-   */
   authInstance = getAuth(app);
-  
-  /**
-   * Cloud Firestore インスタンス
-   * NoSQLデータベースへのアクセスを提供（将来的にユーザーデータ保存等で使用）
-   */
   dbInstance = getFirestore(app);
+  
+  // 開発環境でエミュレーターを使用する場合（オプション）
+  if (firebaseConfig.apiKey === "demo-api-key" && typeof window !== 'undefined') {
+    // 本番環境では実行されない開発用設定
+    console.log("開発モード: Firebase Auth エミュレーターの設定をスキップ");
+  }
   
 } catch (error) {
   console.error("Firebase初期化エラー:", error);
-  console.warn("Firebase設定を確認してください。現在はデモモードで動作します。");
+  // エラーが発生した場合でも、ダミーのauthインスタンスを作成
+  app = initializeApp(firebaseConfig);
+  authInstance = getAuth(app);
+  dbInstance = getFirestore(app);
 }
 
-export const auth = authInstance;
-export const db = dbInstance;
-// デフォルトエクスポートとしてFirebaseアプリインスタンスを提供
+export const auth: Auth = authInstance;
+export const db: Firestore = dbInstance;
 export default app;

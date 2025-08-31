@@ -83,6 +83,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
    * @param password - ユーザーのパスワード
    */
   const signup = async (email: string, password: string): Promise<void> => {
+    if (!auth) {
+      throw new Error('Firebase Authentication が初期化されていません。Firebase設定を確認してください。');
+    }
     await createUserWithEmailAndPassword(auth, email, password);
   };
 
@@ -94,6 +97,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
    * @param password - ユーザーのパスワード
    */
   const login = async (email: string, password: string): Promise<void> => {
+    if (!auth) {
+      throw new Error('Firebase Authentication が初期化されていません。Firebase設定を確認してください。');
+    }
     await signInWithEmailAndPassword(auth, email, password);
   };
 
@@ -102,6 +108,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
    * 現在ログインしているユーザーをログアウト
    */
   const logout = async (): Promise<void> => {
+    if (!auth) {
+      throw new Error('Firebase Authentication が初期化されていません。Firebase設定を確認してください。');
+    }
     await signOut(auth);
   };
 
@@ -110,6 +119,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
    * Googleアカウントを使用してユーザーをログイン
    */
   const loginWithGoogle = async (): Promise<void> => {
+    if (!auth) {
+      throw new Error('Firebase Authentication が初期化されていません。Firebase設定を確認してください。');
+    }
     const provider = new GoogleAuthProvider();
     await signInWithPopup(auth, provider);
   };
@@ -128,13 +140,18 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       return;
     }
 
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setCurrentUser(user); // ユーザー状態を更新
-      setLoading(false);    // 読み込み完了
-    });
+    try {
+      const unsubscribe = onAuthStateChanged(auth, (user) => {
+        setCurrentUser(user); // ユーザー状態を更新
+        setLoading(false);    // 読み込み完了
+      });
 
-    // クリーンアップ関数：コンポーネントのアンマウント時にリスナーを解除
-    return unsubscribe;
+      // クリーンアップ関数：コンポーネントのアンマウント時にリスナーを解除
+      return unsubscribe;
+    } catch (error) {
+      console.error("認証状態監視エラー:", error);
+      setLoading(false);
+    }
   }, []);
 
   /**
