@@ -79,6 +79,7 @@ VITE_FIREBASE_MEASUREMENT_ID=your_measurement_id
 ```
 
 `src/firebase.ts` ファイルの設定オブジェクトを実際の値に更新：
+
 実際は、`.env`からfirebaseに関する情報を取得
 ```typescript
 const firebaseConfig = {
@@ -98,7 +99,7 @@ const firebaseConfig = {
 npm run dev -- --host
 ```
 
-アプリケーションは `http://localhost:5173` でアクセスできます。
+アプリケーションは `http://localhost:5173` でアクセス可能。
 
 ## 🔐 認証フロー
 
@@ -111,7 +112,7 @@ npm run dev -- --host
 
 ### スタイルの変更
 
-`src/index.css` でスタイルをカスタマイズできます。現在は基本的なCSSクラスを使用していますが、TailwindCSSやStyled Componentsなどに置き換え可能です。
+`src/index.css` でスタイルをカスタマイズ可能。現在は基本的なCSSクラスを使用しているが、TailwindCSSやStyled Componentsなどに置き換え可能。
 
 ### 新しいページの追加
 
