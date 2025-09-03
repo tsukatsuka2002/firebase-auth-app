@@ -81,7 +81,7 @@ const firebaseConfig = {
 ### 4. 開発サーバーの起動
 
 ```bash
-npm run dev
+npm run dev -- --host
 ```
 
 アプリケーションは `http://localhost:5173` でアクセスできます。

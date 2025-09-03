@@ -26,7 +26,7 @@ const Signup: React.FC = () => {
   const [loading, setLoading] = useState(false); // ローディング状態
   
   // 認証機能とナビゲーション機能を取得
-  const { signup, loginWithGoogle } = useAuth();
+  const { signup } = useAuth();
   const navigate = useNavigate();
 
   /**
@@ -57,25 +57,6 @@ const Signup: React.FC = () => {
       console.error('Signup error:', error);
     } finally {
       setLoading(false);   // ローディング終了
-    }
-  };
-
-  /**
-   * Googleサインアップハンドラー
-   * Googleアカウントでの登録を処理
-   */
-  const handleGoogleSignup = async () => {
-    try {
-      setError('');
-      setLoading(true);
-      await loginWithGoogle();          // Googleログイン実行（登録も兼ねる）
-      navigate('/dashboard');           // 成功時はダッシュボードにリダイレクト
-    } catch (error) {
-      // Google登録失敗時のエラーハンドリング
-      setError('Googleアカウントでの登録に失敗しました。');
-      console.error('Google signup error:', error);
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -143,17 +124,6 @@ const Signup: React.FC = () => {
               className="btn-primary"
             >
               {loading ? 'アカウント作成中...' : 'アカウント作成'}
-            </button>
-          </div>
-
-          <div>
-            <button
-              type="button"
-              onClick={handleGoogleSignup}
-              disabled={loading}
-              className="btn-secondary"
-            >
-              Googleで登録
             </button>
           </div>
 

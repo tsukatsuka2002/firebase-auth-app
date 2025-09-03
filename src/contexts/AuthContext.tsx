@@ -17,9 +17,7 @@ import {
   createUserWithEmailAndPassword,  // メール/パスワードでの新規ユーザー作成
   signInWithEmailAndPassword,      // メール/パスワードでのログイン
   signOut,                         // ログアウト
-  onAuthStateChanged,              // 認証状態の変化を監視
-  GoogleAuthProvider,              // Google認証プロバイダー
-  signInWithPopup                  // ポップアップでのソーシャルログイン
+  onAuthStateChanged               // 認証状態の変化を監視
 } from 'firebase/auth';
 import type { User } from 'firebase/auth'; // Userの型定義
 import { auth } from '../firebase'; // Firebase設定ファイルからauthインスタンスをインポート
@@ -34,7 +32,6 @@ interface AuthContextType {
   signup: (email: string, password: string) => Promise<void>;     // ユーザー登録関数
   login: (email: string, password: string) => Promise<void>;      // ログイン関数
   logout: () => Promise<void>;                                    // ログアウト関数
-  loginWithGoogle: () => Promise<void>;                           // Googleログイン関数
 }
 
 /**
@@ -115,18 +112,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   };
 
   /**
-   * Googleログイン関数
-   * Googleアカウントを使用してユーザーをログイン
-   */
-  const loginWithGoogle = async (): Promise<void> => {
-    if (!auth) {
-      throw new Error('Firebase Authentication が初期化されていません。Firebase設定を確認してください。');
-    }
-    const provider = new GoogleAuthProvider();
-    await signInWithPopup(auth, provider);
-  };
-
-  /**
    * 認証状態の監視
    * 
    * useEffect を使用して、コンポーネントのマウント時に
@@ -162,8 +147,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     loading,
     signup,
     login,
-    logout,
-    loginWithGoogle
+    logout
   };
 
   return (

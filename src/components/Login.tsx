@@ -24,7 +24,7 @@ const Login: React.FC = () => {
   const [loading, setLoading] = useState(false); // ローディング状態
   
   // 認証機能とナビゲーション機能を取得
-  const { login, loginWithGoogle } = useAuth();
+  const { login } = useAuth();
   const navigate = useNavigate();
 
   /**
@@ -45,25 +45,6 @@ const Login: React.FC = () => {
       console.error('Login error:', error);
     } finally {
       setLoading(false);   // ローディング終了
-    }
-  };
-
-  /**
-   * Googleログインハンドラー
-   * Googleアカウントでのログインを処理
-   */
-  const handleGoogleLogin = async () => {
-    try {
-      setError('');
-      setLoading(true);
-      await loginWithGoogle();       // Googleログイン実行
-      navigate('/dashboard');        // ログイン成功時はダッシュボードにリダイレクト
-    } catch (error) {
-      // Googleログイン失敗時のエラーハンドリング
-      setError('Googleログインに失敗しました。');
-      console.error('Google login error:', error);
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -126,18 +107,6 @@ const Login: React.FC = () => {
               className="btn-primary"
             >
               {loading ? 'ログイン中...' : 'ログイン'}
-            </button>
-          </div>
-
-          {/* Googleログインボタン */}
-          <div>
-            <button
-              type="button"
-              onClick={handleGoogleLogin}
-              disabled={loading}
-              className="btn-secondary"
-            >
-              Googleでログイン
             </button>
           </div>
 
