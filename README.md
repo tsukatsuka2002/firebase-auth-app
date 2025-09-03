@@ -6,7 +6,7 @@ React + TypeScript + Vite + Firebase Authentication を使用したユーザー�
 
 - **ユーザー認証**
   - メール/パスワードでのサインアップ・ログイン
-  - Googleアカウントでの認証
+  - Googleアカウントでの認証(オプション)
   - 自動ログアウト機能
   
 - **セキュリティ**
@@ -62,6 +62,7 @@ npm install
 3. Sign-in method で以下を設定：
    - Email/Password を有効化
    - Google を有効化（オプション）
+   - ホームからプロジェクトを選択、ウェブ（＜＞）をアプリとして追加
 
 ### 3. Firebase 設定の更新
 
