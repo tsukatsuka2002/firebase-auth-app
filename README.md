@@ -66,16 +66,29 @@ npm install
 
 ### 3. Firebase 設定の更新
 
-`src/firebase.ts` ファイルの設定オブジェクトを実際の値に更新：
+プロジェクトのルートに `.env` ファイルを作成し、以下を設定:
 
+```env
+VITE_FIREBASE_API_KEY=your_api_key
+VITE_FIREBASE_AUTH_DOMAIN=your_project_id.firebaseapp.com
+VITE_FIREBASE_PROJECT_ID=your_project_id
+VITE_FIREBASE_STORAGE_BUCKET=your_project_id.appspot.com
+VITE_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
+VITE_FIREBASE_APP_ID=your_app_id
+VITE_FIREBASE_MEASUREMENT_ID=your_measurement_id
+```
+
+`src/firebase.ts` ファイルの設定オブジェクトを実際の値に更新：
+実際は、`.env`からfirebaseに関する情報を取得
 ```typescript
 const firebaseConfig = {
-  apiKey: "実際のAPIキー",
-  authDomain: "実際の認証ドメイン",
-  projectId: "実際のプロジェクトID",
-  storageBucket: "実際のストレージバケット",
-  messagingSenderId: "実際のメッセージング送信者ID",
-  appId: "実際のアプリID"
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID
 };
 ```
 
