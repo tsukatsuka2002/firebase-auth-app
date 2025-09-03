@@ -8,31 +8,26 @@ import type { Firestore } from 'firebase/firestore';
 /**
  * Firebase プロジェクトの設定オブジェクト
  * 
- * 🚨 重要: これは開発用のプレースホルダー設定です
- * 実際のFirebaseプロジェクトを使用する場合は、以下の手順で設定を更新してください：
+ * 環境変数から設定値を取得します。
+ * Viteでは環境変数は VITE_ プレフィックスが必要です。
  * 
- * 設定値の取得方法：
- * 1. Firebase Console (https://console.firebase.google.com/) にアクセス
- * 2. プロジェクトを選択
- * 3. 歯車アイコン → プロジェクトの設定
- * 4. 「マイアプリ」セクションでWebアプリを追加
- * 5. 表示される設定オブジェクトをコピー
+ * 設定値は .env ファイルで管理されています。
  */
 const firebaseConfig = {
-  apiKey: "demo-api-key",                    
-  authDomain: "demo-project.firebaseapp.com",            
-  projectId: "demo-project-id",              
-  storageBucket: "demo-project.appspot.com",      
-  messagingSenderId: "123456789", 
-  appId: "1:123456789:web:abcdef123456789"                       
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID
 };
 
-// 開発環境での警告表示
-if (firebaseConfig.apiKey === "demo-api-key") {
+// 設定の検証
+if (!firebaseConfig.apiKey) {
   console.warn(
-    "🚨 Firebase設定が開発用プレースホルダーです。\n" +
-    "実際の認証機能を使用するには、Firebase Consoleで" +
-    "プロジェクトを作成し、src/firebase.tsの設定を更新してください。"
+    "🚨 Firebase設定が見つかりません。\n" +
+    ".envファイルに適切なFirebase設定値を追加してください。"
   );
 }
 
@@ -47,9 +42,9 @@ try {
   dbInstance = getFirestore(app);
   
   // 開発環境でエミュレーターを使用する場合（オプション）
-  if (firebaseConfig.apiKey === "demo-api-key" && typeof window !== 'undefined') {
+  if (!firebaseConfig.apiKey && typeof window !== 'undefined') {
     // 本番環境では実行されない開発用設定
-    console.log("開発モード: Firebase Auth エミュレーターの設定をスキップ");
+    console.log("開発モード: Firebase設定が未完了");
   }
   
 } catch (error) {
