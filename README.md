@@ -6,7 +6,6 @@ React + TypeScript + Vite + Firebase Authentication を使用したユーザー�
 
 - **ユーザー認証**
   - メール/パスワードでのサインアップ・ログイン
-  - Googleアカウントでの認証(オプション)
   - 自動ログアウト機能
   
 - **セキュリティ**
